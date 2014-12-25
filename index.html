@@ -1,0 +1,86 @@
+<!-- 
+Designed & Developed by Patrick El-Hage
+http://patrickelhage.com
+@hagepat
+2014
+-->
+<!doctype html>
+<html ng-app="contentApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title></title>
+    <script src="js/angular.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <script src="js/redditFactory.js"></script>
+    <script src="js/redditController.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,500,700' rel='stylesheet' type='text/css'>
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body ng-controller="RedditController">
+
+    <div class="sidebar">
+        <span ng-click="sidebar = !sidebar" class="mobile-toggle glyphicon glyphicon-th-list"></span>
+        <img src="img/reddit.png" ng-click="getPumped('hello')"/>
+        <ul ng-hide="sidebar">
+            <li ng-repeat="subs in savedFeed track by $index">
+                <a href="javascript:;" ng-click="getFeed(subs, timeQuery)" 
+                ng-class="{active: subs === selectedFeed}">
+
+                <span class="feed-name">/r/{{subs}}</span>
+                
+                <span class="delete-feed glyphicon glyphicon-remove" href="javascript:;" ng-click="removeFeed(subs)" ></span>
+            </a>
+
+        </li>
+        <li>
+            <form class="add-feed" ng-submit="addFeed(addFeedInput)">
+                <input type="text" ng-model="addFeedInput" placeholder="Add a subreddit">
+                <span class="add-button glyphicon glyphicon-plus" href="javascript:;" ng-click="addFeed(addFeedInput)"></span>
+            </form>
+        </li>
+    </ul>
+</div>
+
+
+<div class="content">
+
+    <div class="bigger-wrapper">
+
+        <h1><span style="color:#00BCD4">></span>{{timeRange.label}}'s top posts in /r/{{selectedFeed}} </h1>
+
+        <p style="text-align:right">Sort by<select ng-model="timeRange" ng-options="item.label for item in timeline" ng-change="sortBy(timeRange.query)"></select></p>
+
+        <div class="wrapper" ng-repeat="posts in feed">
+
+            <div class="votes"> {{posts.score}} </div>
+
+            <div class="thumb">
+                <img ng-src="{{posts.thumbnail}}"/> 
+            </div>
+
+            <div class="inner">
+
+                <div>
+                    <a class="title" ng-href="{{posts.url}}" target="_blank">{{posts.title}}</a>
+                    <span class="domain">({{posts.domain}})</span>
+                </div>
+
+                <div>
+                    <a class="comments" ng-href="http://reddit.com{{posts.permalink}}" target="_blank">{{posts.num_comments}} comments</a>
+
+                    <a class="social" ng-href="http://twitter.com/share?text={{posts.title}}&url={{posts.url}}" target="_blank"><img src="img/twitter.png"/></a>
+
+                    <a class="social" href="https://www.facebook.com/sharer/sharer.php?u={{posts.url}}" target="_blank"><img src="img/fb.png"/></a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
