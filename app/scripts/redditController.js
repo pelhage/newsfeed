@@ -81,7 +81,7 @@
       var index = $scope.savedFeed.indexOf(feedName);
       $scope.savedFeed.splice(index, 1);            
         
-      Factory.saveToLocal('reddit',$scope.savedFeed);
+      Factory.saveToLocal('reddit', $scope.savedFeed);
     };
 
   };

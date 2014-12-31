@@ -1,4 +1,5 @@
 (function() {
+    
   var Factory = function($http){
 
     var factory = {};
@@ -14,8 +15,7 @@
       factory.sessionInfo = function(defaultFeed) {
         if (localStorage.getItem('reddit')) {
           return JSON.parse(localStorage.getItem('reddit'));
-        } 
-        else { 
+        } else { 
           return defaultFeed;
         }	
       };
